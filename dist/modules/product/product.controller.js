@@ -8,29 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productControllers = void 0;
 const product_service_1 = require("./product.service");
-const zod_1 = require("zod");
+const product_validation_1 = __importDefault(require("./product.validation"));
 const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        //schema validation using zod
-        const productValidationSchema = ({
-            name: zod_1.z.string().min(1).max(255),
-            description: zod_1.z.string().min(1),
-            price: zod_1.z.number().min(0),
-            category: zod_1.z.string().min(1),
-            tags: zod_1.z.array(zod_1.z.string()),
-            variants: zod_1.z.array(zod_1.z.object({
-                type: zod_1.z.string().min(1),
-                value: zod_1.z.string().min(1)
-            })),
-            inventory: zod_1.z.object({
-                quantity: zod_1.z.number().min(0),
-                inStock: zod_1.z.boolean()
-            })
-        });
-        const result = yield product_service_1.productServices.addNewProduct(req.body);
+        const newProduct = req.body;
+        const validationResult = product_validation_1.default.parse(newProduct);
+        const result = yield product_service_1.productServices.addNewProduct(validationResult);
         res.status(200).json({
             success: true,
             data: result,
