@@ -24,13 +24,24 @@ const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const result = yield product_service_1.productServices.getAllProducts();
-        res.status(200).json({
-            success: true,
-            message: "Products fetched successfully!",
-            data: result,
-        });
+        if ((_a = req.query) === null || _a === void 0 ? void 0 : _a.searchTerm) {
+            const result = yield product_service_1.productServices.getAllProducts(req.query.searchTerm);
+            res.status(200).json({
+                success: true,
+                message: "Products found successfully!",
+                data: result,
+            });
+        }
+        else {
+            const result = yield product_service_1.productServices.getAllProducts(null);
+            res.status(200).json({
+                success: true,
+                message: "Products fetched successfully!",
+                data: result,
+            });
+        }
     }
     catch (error) {
         console.log(error);
