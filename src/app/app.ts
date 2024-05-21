@@ -15,7 +15,7 @@ app.use('/api/orders', orderRoutes);
 
 
 app.get('/', (req:Request, res:Response) => {
-  res.send('E Commerce Server!')
+  res.send('Server is running!')
 })
 
 export default app;

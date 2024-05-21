@@ -14,6 +14,6 @@ app.use((0, cors_1.default)());
 app.use('/api/products', product_route_1.productRoutes);
 app.use('/api/orders', orders_route_1.orderRoutes);
 app.get('/', (req, res) => {
-    res.send('E Commerce Server!');
+    res.send('Server is running!');
 });
 exports.default = app;
