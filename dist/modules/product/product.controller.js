@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.productControllers = void 0;
 const product_service_1 = require("./product.service");
 const product_validation_1 = __importDefault(require("./product.validation"));
+//insert a product
 const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newProduct = req.body;
@@ -29,6 +30,7 @@ const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(error);
     }
 });
+//get products
 const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
@@ -53,6 +55,7 @@ const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         console.log(error);
     }
 });
+//get product by id
 const getSingleProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield product_service_1.productServices.getProductById(req.params.productId);
@@ -66,6 +69,7 @@ const getSingleProducts = (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.log(error);
     }
 });
+//delete product
 const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield product_service_1.productServices.deleteProductById(req.params.productId);

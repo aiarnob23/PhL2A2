@@ -2,7 +2,7 @@ import { z } from "zod";
 
     //schema validation using zod
      const productValidationSchema = z.object({
-        name: z.string({message:"must be a string"}).min(1).max(255),
+        name: z.string({message:"must be a string"}).min(1,{message:"minimum 1 char is required"}).max(255),
         description: z.string().min(1),
         price: z.number().min(0),
         category: z.string().min(1),
