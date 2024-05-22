@@ -8,12 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderControllers = void 0;
 const orders_services_1 = require("./orders.services");
+const orders_validation_1 = __importDefault(require("./orders.validation"));
+//insert order
 const insertOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield orders_services_1.orderServices.postOrder(req.body);
+        const newOrder = req.body;
+        const validationResult = orders_validation_1.default.parse(newOrder);
+        const result = yield orders_services_1.orderServices.postOrder(validationResult);
         if (result.success) {
             res.status(200).json({
                 success: true,
@@ -31,10 +38,11 @@ const insertOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         console.log(error);
         res.status(500).json({
             success: false,
-            message: 'Please check the information again!',
+            message: "Something went wrong. Please check the information again!",
         });
     }
 });
+//get orders
 const getOders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (req.query.email) {
@@ -54,6 +62,10 @@ const getOders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!",
+        });
     }
 });
 exports.orderControllers = {

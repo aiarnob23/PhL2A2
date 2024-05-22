@@ -18,4 +18,13 @@ app.get('/', (req:Request, res:Response) => {
   res.send('Server is running!')
 })
 
+//error route handling function
+app.use('*', (req:Request, res:Response) => {
+  res.send({
+    success:false,
+    message:"Route not found",
+  })
+})
+
+
 export default app;

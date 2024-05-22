@@ -27,7 +27,10 @@ const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (error) {
-        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
 });
 //get products
@@ -53,6 +56,10 @@ const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
 });
 //get product by id
@@ -67,6 +74,10 @@ const getSingleProducts = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
 });
 //update product
@@ -89,6 +100,10 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
 });
 //delete product
@@ -103,6 +118,10 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        });
     }
 });
 exports.productControllers = {

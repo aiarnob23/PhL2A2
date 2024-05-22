@@ -4,8 +4,8 @@ import { z } from "zod";
      const productValidationSchema = z.object({
         name: z.string({message:"must be a string"}).min(1,{message:"minimum 1 char is required"}).max(255),
         description: z.string().min(1),
-        price: z.number().min(0),
-        category: z.string().min(1),
+        price: z.number({message:"price can't be string"}).min(0),
+        category: z.string({message:"must be string"}).min(1),
         tags: z.array(z.string()),
         variants: z.array(
             z.object({

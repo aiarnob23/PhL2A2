@@ -4,12 +4,12 @@ import { productModel } from "./product.model";
 
 type searchTerm = string | null;
 
-
+//add new product 
 const addNewProduct = async (product: productT) => {
     const result = await productModel.create(product);
     return result;
 }
-
+//get products
 const getAllProducts = async (searchTerm: searchTerm) => {
     if (searchTerm) {
         const regex = new RegExp(searchTerm, "i");
@@ -28,13 +28,12 @@ const getAllProducts = async (searchTerm: searchTerm) => {
         return result;
     }
 }
-
-
+//get product by id
 const getProductById = async (productId: string) => {
     const result = await productModel.find({ _id: productId });
     return result;
 }
-
+//update product by id
 const updateProductById = async(productId:string, updatedInfo:productT)=>{
     const result = await productModel.replaceOne({_id:productId}, updatedInfo);
     return result;

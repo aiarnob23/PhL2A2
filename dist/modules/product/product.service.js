@@ -11,10 +11,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productServices = void 0;
 const product_model_1 = require("./product.model");
+//add new product 
 const addNewProduct = (product) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield product_model_1.productModel.create(product);
     return result;
 });
+//get products
 const getAllProducts = (searchTerm) => __awaiter(void 0, void 0, void 0, function* () {
     if (searchTerm) {
         const regex = new RegExp(searchTerm, "i");
@@ -33,10 +35,12 @@ const getAllProducts = (searchTerm) => __awaiter(void 0, void 0, void 0, functio
         return result;
     }
 });
+//get product by id
 const getProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield product_model_1.productModel.find({ _id: productId });
     return result;
 });
+//update product by id
 const updateProductById = (productId, updatedInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield product_model_1.productModel.replaceOne({ _id: productId }, updatedInfo);
     return result;

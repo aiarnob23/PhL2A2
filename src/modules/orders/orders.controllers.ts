@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { orderServices } from "./orders.services";
 import OrderT from "./orders.interface";
+import orderValidationSchema from "./orders.validation";
 
 type ServiceResponse = {
     success?: boolean;
@@ -9,9 +10,12 @@ type ServiceResponse = {
 };
 
 
+//insert order
 const insertOrder = async (req: Request, res: Response) => {
     try {
-        const result : ServiceResponse | any = await orderServices.postOrder(req.body);
+        const newOrder = req.body;
+        const validationResult = orderValidationSchema.parse(newOrder);
+        const result : ServiceResponse | any = await orderServices.postOrder(validationResult);
 
         if (result.success) {
             res.status(200).json({
@@ -28,11 +32,11 @@ const insertOrder = async (req: Request, res: Response) => {
         console.log(error);
         res.status(500).json({
             success: false,
-            message: 'Please check the information again!',
+            message:"Something went wrong. Please check the information again!",
         });
     }
 }
-
+//get orders
 const getOders = async (req: Request, res: Response) => {
     try {
         if (req.query.email) {
@@ -52,6 +56,10 @@ const getOders = async (req: Request, res: Response) => {
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({
+            success:false,
+            message:"Something went wrong!",
+        })
     }
 }
 

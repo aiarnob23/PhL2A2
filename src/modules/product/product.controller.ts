@@ -15,7 +15,10 @@ const insertProduct = async (req: Request, res: Response) => {
         })
     }
     catch (error) {
-        console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        })
     }
 }
 //get products
@@ -41,6 +44,10 @@ const allProducts = async (req: Request, res: Response) => {
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        })
     }
 }
 //get product by id
@@ -55,6 +62,10 @@ const getSingleProducts = async (req: Request, res: Response) => {
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        })
     }
 }
 
@@ -62,22 +73,26 @@ const getSingleProducts = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
     try {
         const validationResult = productValidationSchema.safeParse(req.body);
-        if(validationResult.data){
+        if (validationResult.data) {
             const result = await productServices.updateProductById(req.params.productId, validationResult.data);
-        res.status(200).json({
-            success: true,
-            message: "Product updated successfully!",
-            data: result,
-        })
+            res.status(200).json({
+                success: true,
+                message: "Product updated successfully!",
+                data: result,
+            })
         }
-        else{
+        else {
             res.json({
-                error:validationResult.error,
+                error: validationResult.error,
             })
         }
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        })
     }
 }
 
@@ -93,6 +108,10 @@ const deleteProduct = async (req: Request, res: Response) => {
     }
     catch (error) {
         console.log(error);
+        res.status(400).json({
+            success: false,
+            message: "Something went wrong",
+        })
     }
 }
 
@@ -106,5 +125,5 @@ export const productControllers = {
     getSingleProducts,
     updateProduct,
     deleteProduct,
-    
+
 }
