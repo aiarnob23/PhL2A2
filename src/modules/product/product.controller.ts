@@ -2,138 +2,128 @@ import { Request, Response } from "express";
 import { productServices } from "./product.service";
 import productValidationSchema from "./product.validation";
 
-
 //insert a new product
 const insertProduct = async (req: Request, res: Response) => {
-    try {
-        const newProduct = req.body;
-        const validationResult = productValidationSchema.parse(newProduct);
-        const result = await productServices.addNewProduct(validationResult);
-        res.status(200).json({
-            success: true,
-            message: "Product created successfully!",
-            data: result,
-        })
-    }
-    catch (error) {
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        })
-    }
-}
+  try {
+    const newProduct = req.body;
+    const validationResult = productValidationSchema.parse(newProduct);
+    const result = await productServices.addNewProduct(validationResult);
+    res.status(200).json({
+      success: true,
+      message: "Product created successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 //get products
 const allProducts = async (req: Request, res: Response) => {
-    try {
-        if (req.query?.searchTerm) {
-            const searchTerm = req.query.searchTerm;
-            const result = await productServices.getAllProducts(searchTerm as string);
-            if (result.length) {
-                res.status(200).json({
-                    success: true,
-                    message: `Products matching search term ${searchTerm} fetched successfully`,
-                    data: result,
-
-                })
-            }
-            else {
-                res.status(200).json({
-                    success:false,
-                    message: "No data found!",
-                })
-            }
-        }
-        else {
-            const result = await productServices.getAllProducts(null);
-            res.status(200).json({
-                success: true,
-                message: "Products fetched successfully!",
-                data: result,
-            })
-        }
+  try {
+    if (req.query?.searchTerm) {
+      const searchTerm = req.query.searchTerm;
+      const result = await productServices.getAllProducts(searchTerm as string);
+      if (result.length) {
+        res.status(200).json({
+          success: true,
+          message: `Products matching search term ${searchTerm} fetched successfully`,
+          data: result,
+        });
+      } else {
+        res.status(200).json({
+          success: false,
+          message: "No data found!",
+        });
+      }
+    } else {
+      const result = await productServices.getAllProducts(null);
+      res.status(200).json({
+        success: true,
+        message: "Products fetched successfully!",
+        data: result,
+      });
     }
-    catch (error) {
-        console.log(error);
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        })
-    }
-}
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 //get product by id
 const getSingleProducts = async (req: Request, res: Response) => {
-    try {
-        const result = await productServices.getProductById(req.params.productId);
-        res.status(200).json({
-            success: true,
-            message: "Products fetched successfully!",
-            data: result,
-        })
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        })
-    }
-}
+  try {
+    const result = await productServices.getProductById(req.params.productId);
+    res.status(200).json({
+      success: true,
+      message: "Products fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 
 //update product
 const updateProduct = async (req: Request, res: Response) => {
-    try {
-        const validationResult = productValidationSchema.safeParse(req.body);
-        if (validationResult.data) {
-            const result = await productServices.updateProductById(req.params.productId, validationResult.data);
-            res.status(200).json({
-                success: true,
-                message: "Product updated successfully!",
-                data: result,
-            })
-        }
-        else {
-            res.json({
-                error: validationResult.error,
-            })
-        }
+  try {
+    const validationResult = productValidationSchema.safeParse(req.body);
+    if (validationResult.data) {
+      const result = await productServices.updateProductById(
+        req.params.productId,
+        validationResult.data,
+      );
+      res.status(200).json({
+        success: true,
+        message: "Product updated successfully!",
+        data: result,
+      });
+    } else {
+      res.json({
+        error: validationResult.error,
+      });
     }
-    catch (error) {
-        console.log(error);
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        })
-    }
-}
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 
 //delete product
 const deleteProduct = async (req: Request, res: Response) => {
-    try {
-        const result = await productServices.deleteProductById(req.params.productId);
-        res.status(200).json({
-            success: true,
-            message: "Product deleted successfully!",
-            data: null,
-        })
-    }
-    catch (error) {
-        console.log(error);
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-        })
-    }
-}
-
-
-
-
+  try {
+    const result = await productServices.deleteProductById(
+      req.params.productId,
+    );
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully!",
+      data: null,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 
 export const productControllers = {
-    insertProduct,
-    allProducts,
-    getSingleProducts,
-    updateProduct,
-    deleteProduct,
-
-}
+  insertProduct,
+  allProducts,
+  getSingleProducts,
+  updateProduct,
+  deleteProduct,
+};
