@@ -24,6 +24,7 @@ const insertOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (result.success) {
             res.status(200).json({
                 success: true,
+                message: "Order created successfully!",
                 data: result,
             });
         }
@@ -47,10 +48,19 @@ const getOders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (req.query.email) {
             const result = yield orders_services_1.orderServices.findOders(req.query.email);
-            res.status(200).json({
-                success: true,
-                data: result,
-            });
+            if (result.length) {
+                res.status(200).json({
+                    success: true,
+                    message: "Orders fetched successfully for user email",
+                    data: result,
+                });
+            }
+            else {
+                res.json({
+                    success: false,
+                    message: "Order not found",
+                });
+            }
         }
         else {
             const result = yield orders_services_1.orderServices.findOders(null);

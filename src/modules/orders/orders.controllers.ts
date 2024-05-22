@@ -20,6 +20,7 @@ const insertOrder = async (req: Request, res: Response) => {
         if (result.success) {
             res.status(200).json({
                 success: true,
+                message:"Order created successfully!",
                 data: result,
             });
         } else {
@@ -41,10 +42,19 @@ const getOders = async (req: Request, res: Response) => {
     try {
         if (req.query.email) {
             const result = await orderServices.findOders(req.query.email as string);
-            res.status(200).json({
-                success: true,
-                data: result,
-            })
+            if(result.length){
+                res.status(200).json({
+                    success: true,
+                    message:"Orders fetched successfully for user email",
+                    data: result,
+                })
+            }
+            else{
+                res.json({
+                    success:false,
+                    message:"Order not found",
+                })
+            }
         }
         else {
             const result = await orderServices.findOders(null);

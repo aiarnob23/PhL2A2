@@ -36,9 +36,12 @@ const getProductById = async (productId: string) => {
 //update product by id
 const updateProductById = async(productId:string, updatedInfo:productT)=>{
     const result = await productModel.replaceOne({_id:productId}, updatedInfo);
-    return result;
+    if(result.modifiedCount){
+        const updatedProduct = await productModel.find({_id:productId});
+        return updatedProduct; 
+    }
 }
-
+//delete a product
 const deleteProductById = async (productId: string) => {
     const result = await productModel.findByIdAndDelete(productId);
     return result;

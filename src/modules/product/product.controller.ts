@@ -11,6 +11,7 @@ const insertProduct = async (req: Request, res: Response) => {
         const result = await productServices.addNewProduct(validationResult);
         res.status(200).json({
             success: true,
+            message: "Product created successfully!",
             data: result,
         })
     }
@@ -25,13 +26,22 @@ const insertProduct = async (req: Request, res: Response) => {
 const allProducts = async (req: Request, res: Response) => {
     try {
         if (req.query?.searchTerm) {
-            const result = await productServices.getAllProducts(req.query.searchTerm as string);
-            res.status(200).json({
-                success: true,
-                message: "Products found successfully!",
-                data: result,
+            const searchTerm = req.query.searchTerm;
+            const result = await productServices.getAllProducts(searchTerm as string);
+            if (result.length) {
+                res.status(200).json({
+                    success: true,
+                    message: `Products matching search term ${searchTerm} fetched successfully`,
+                    data: result,
 
-            })
+                })
+            }
+            else {
+                res.status(200).json({
+                    success:false,
+                    message: "No data found!",
+                })
+            }
         }
         else {
             const result = await productServices.getAllProducts(null);

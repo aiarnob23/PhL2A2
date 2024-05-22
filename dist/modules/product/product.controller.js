@@ -23,6 +23,7 @@ const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const result = yield product_service_1.productServices.addNewProduct(validationResult);
         res.status(200).json({
             success: true,
+            message: "Product created successfully!",
             data: result,
         });
     }
@@ -38,12 +39,21 @@ const allProducts = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     var _a;
     try {
         if ((_a = req.query) === null || _a === void 0 ? void 0 : _a.searchTerm) {
-            const result = yield product_service_1.productServices.getAllProducts(req.query.searchTerm);
-            res.status(200).json({
-                success: true,
-                message: "Products found successfully!",
-                data: result,
-            });
+            const searchTerm = req.query.searchTerm;
+            const result = yield product_service_1.productServices.getAllProducts(searchTerm);
+            if (result.length) {
+                res.status(200).json({
+                    success: true,
+                    message: `Products matching search term ${searchTerm} fetched successfully`,
+                    data: result,
+                });
+            }
+            else {
+                res.status(200).json({
+                    success: false,
+                    message: "No data found!",
+                });
+            }
         }
         else {
             const result = yield product_service_1.productServices.getAllProducts(null);
