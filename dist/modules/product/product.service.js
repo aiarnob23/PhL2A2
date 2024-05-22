@@ -41,9 +41,14 @@ const deleteProductById = (productId) => __awaiter(void 0, void 0, void 0, funct
     const result = yield product_model_1.productModel.findByIdAndDelete(productId);
     return result;
 });
+const updateProductById = (productId, updatedInfo) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield product_model_1.productModel.replaceOne({ _id: productId }, updatedInfo);
+    return result;
+});
 exports.productServices = {
     addNewProduct,
     getAllProducts,
     getProductById,
     deleteProductById,
+    updateProductById,
 };

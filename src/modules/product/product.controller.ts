@@ -71,6 +71,28 @@ const deleteProduct = async (req: Request, res: Response) => {
         console.log(error);
     }
 }
+//update product
+const updateProduct = async (req: Request, res: Response) => {
+    try {
+        const validationResult = productValidationSchema.safeParse(req.body);
+        if(validationResult.data){
+            const result = await productServices.updateProductById(req.params.productId, validationResult.data);
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully!",
+            data: result,
+        })
+        }
+        else{
+            res.json({
+                error:validationResult.error,
+            })
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
 
 
 
@@ -81,4 +103,5 @@ export const productControllers = {
     allProducts,
     getSingleProducts,
     deleteProduct,
+    updateProduct,
 }

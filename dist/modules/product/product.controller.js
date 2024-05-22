@@ -83,9 +83,32 @@ const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(error);
     }
 });
+//update product
+const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const validationResult = product_validation_1.default.safeParse(req.body);
+        if (validationResult.data) {
+            const result = yield product_service_1.productServices.updateProductById(req.params.productId, validationResult.data);
+            res.status(200).json({
+                success: true,
+                message: "Product updated successfully!",
+                data: result,
+            });
+        }
+        else {
+            res.json({
+                error: validationResult.error,
+            });
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 exports.productControllers = {
     insertProduct,
     allProducts,
     getSingleProducts,
     deleteProduct,
+    updateProduct,
 };
