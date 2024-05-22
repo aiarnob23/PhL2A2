@@ -14,7 +14,9 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Server is running!");
+  res.json({
+    message:"Server is running!"
+  });
 });
 
 //error route handling function
