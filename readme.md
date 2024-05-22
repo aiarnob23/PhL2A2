@@ -1,7 +1,7 @@
-##How to run the application locally:
+## How to run the application locally:
 
 
-**write the following commands in the command prompt: **
+*** write the following commands in the command prompt: ***
 
 
 **_npm i_**
