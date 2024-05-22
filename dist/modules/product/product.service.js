@@ -37,12 +37,12 @@ const getProductById = (productId) => __awaiter(void 0, void 0, void 0, function
     const result = yield product_model_1.productModel.find({ _id: productId });
     return result;
 });
-const deleteProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield product_model_1.productModel.findByIdAndDelete(productId);
-    return result;
-});
 const updateProductById = (productId, updatedInfo) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield product_model_1.productModel.replaceOne({ _id: productId }, updatedInfo);
+    return result;
+});
+const deleteProductById = (productId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield product_model_1.productModel.findByIdAndDelete(productId);
     return result;
 });
 exports.productServices = {

@@ -3,7 +3,7 @@ import { productServices } from "./product.service";
 import productValidationSchema from "./product.validation";
 
 
-//insert a product
+//insert a new product
 const insertProduct = async (req: Request, res: Response) => {
     try {
         const newProduct = req.body;
@@ -57,20 +57,7 @@ const getSingleProducts = async (req: Request, res: Response) => {
         console.log(error);
     }
 }
-//delete product
-const deleteProduct = async (req: Request, res: Response) => {
-    try {
-        const result = await productServices.deleteProductById(req.params.productId);
-        res.status(200).json({
-            success: true,
-            message: "Product deleted successfully!",
-            data: null,
-        })
-    }
-    catch (error) {
-        console.log(error);
-    }
-}
+
 //update product
 const updateProduct = async (req: Request, res: Response) => {
     try {
@@ -94,6 +81,21 @@ const updateProduct = async (req: Request, res: Response) => {
     }
 }
 
+//delete product
+const deleteProduct = async (req: Request, res: Response) => {
+    try {
+        const result = await productServices.deleteProductById(req.params.productId);
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully!",
+            data: null,
+        })
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
@@ -102,6 +104,7 @@ export const productControllers = {
     insertProduct,
     allProducts,
     getSingleProducts,
-    deleteProduct,
     updateProduct,
+    deleteProduct,
+    
 }

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.productControllers = void 0;
 const product_service_1 = require("./product.service");
 const product_validation_1 = __importDefault(require("./product.validation"));
-//insert a product
+//insert a new product
 const insertProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newProduct = req.body;
@@ -69,20 +69,6 @@ const getSingleProducts = (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.log(error);
     }
 });
-//delete product
-const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield product_service_1.productServices.deleteProductById(req.params.productId);
-        res.status(200).json({
-            success: true,
-            message: "Product deleted successfully!",
-            data: null,
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-});
 //update product
 const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -105,10 +91,24 @@ const updateProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.log(error);
     }
 });
+//delete product
+const deleteProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield product_service_1.productServices.deleteProductById(req.params.productId);
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully!",
+            data: null,
+        });
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 exports.productControllers = {
     insertProduct,
     allProducts,
     getSingleProducts,
-    deleteProduct,
     updateProduct,
+    deleteProduct,
 };

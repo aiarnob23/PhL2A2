@@ -35,15 +35,17 @@ const getProductById = async (productId: string) => {
     return result;
 }
 
+const updateProductById = async(productId:string, updatedInfo:productT)=>{
+    const result = await productModel.replaceOne({_id:productId}, updatedInfo);
+    return result;
+}
+
 const deleteProductById = async (productId: string) => {
     const result = await productModel.findByIdAndDelete(productId);
     return result;
 }
 
-const updateProductById = async(productId:string, updatedInfo:productT)=>{
-    const result = await productModel.replaceOne({_id:productId}, updatedInfo);
-    return result;
-}
+
 
 
 export const productServices = {

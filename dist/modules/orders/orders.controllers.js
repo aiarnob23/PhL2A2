@@ -14,13 +14,25 @@ const orders_services_1 = require("./orders.services");
 const insertOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield orders_services_1.orderServices.postOrder(req.body);
-        res.status(200).json({
-            success: true,
-            data: result,
-        });
+        if (result.success) {
+            res.status(200).json({
+                success: true,
+                data: result,
+            });
+        }
+        else {
+            res.status(400).json({
+                success: false,
+                message: result.message,
+            });
+        }
     }
     catch (error) {
         console.log(error);
+        res.status(500).json({
+            success: false,
+            message: 'Please check the information again!',
+        });
     }
 });
 const getOders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
